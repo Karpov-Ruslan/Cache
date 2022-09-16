@@ -1,6 +1,6 @@
 #include <iostream>
 #include <unordered_map>
-#include <array>
+#include <vector>
 #include <list>
 
 struct page_t {
@@ -13,10 +13,10 @@ struct page_t {
 
 
 
-template <typename T, const size_t N, typename KeyF = int>
+template <typename T, typename KeyF = int>
 class ideal_cache {
   private:
-    const std::array<T, N> &array;
+    const std::vector<T> &array;
     std::unordered_multimap<KeyF, size_t> multi_hash;
     size_t sz;
     std::list<T> cache;
@@ -24,9 +24,9 @@ class ideal_cache {
     std::unordered_map<KeyF, ListIt> hash;
 
   public:
-    ideal_cache(const size_t size, const std::array<T, N> &buffer): array(buffer) {
-        for(size_t i = N - 1; i >=0; i--) {
-            multi_hash.insert(std::make_pair<KeyF, size_t>(buffer[i].id, i));
+    ideal_cache(const size_t size, const std::vector<T> &buffer): array(buffer) {
+        for(size_t i = buffer.size() - 1; i >=0; i--) {
+            multi_hash.insert(std::make_pair(buffer[i].id, i));
         }
         sz = size;
     }
@@ -52,13 +52,13 @@ class ideal_cache {
     }
 
   public:
-    bool lookup_update(const size_t N) {
-        KeyF key = array[N].id;
+    bool lookup_update(const size_t ArrN) {
+        KeyF key = array[ArrN].id;
         if (full()) {
             hash.erase(cache.back().id);
             cache.pop_back();
         }
-        hash[key] = cache.insert(search_pos_for_new_element(ArrN), element);
+        hash[key] = cache.insert(search_pos_for_new_element(ArrN), array[ArrN]);
         multi_hash.erase(multi_hash.find(key));
         if (hash.find(key) == hash.end()) {
             return false;
@@ -72,18 +72,18 @@ int result_of_ideal_cache() {
     size_t num_of_pages;
     int size, counter = 0;
     std::cin >> num_of_pages >> size;
-    std::array<page_t, 10> array_of_pages;
+    std::vector<page_t> array_of_pages;
     
 
-    for(int i = 0; i < 10; i++) {
+    for(int i = 0; i < num_of_pages; i++) {
         int id;
         std::cin >> id;
-        array_of_pages[i] = page_t(id);
+        array_of_pages.push_back(page_t(id));
     }
 
-    ideal_cache<page_t, 10> cache(size, array_of_pages);
+    ideal_cache<page_t> cache(size, array_of_pages);
 
-    for(int i = 0; i < 10; i++) {
+    for(int i = 0; i < num_of_pages; i++) {
         if(cache.lookup_update(i)) {
             counter++;
         }
