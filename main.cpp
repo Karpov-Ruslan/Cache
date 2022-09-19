@@ -4,7 +4,7 @@
 
 int main() {
     
-    int num_of_pages;
+    size_t num_of_pages;
     int size, counter = 0;
     std::cin >> num_of_pages >> size;
     std::vector<page_t> array;
