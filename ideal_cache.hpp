@@ -6,6 +6,8 @@
 #include <vector>
 #include <climits>
 
+namespace krvlib {
+
 template <typename T, typename KeyF = int>
 class ideal_cache {
   private:
@@ -29,3 +31,5 @@ class ideal_cache {
 };
 
 int result_of_ideal_cache(std::vector<page_t> &array_of_pages, size_t num_of_pages, int size);
+
+}

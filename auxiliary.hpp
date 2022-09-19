@@ -1,5 +1,7 @@
 #pragma once
 
+namespace krvlib {
+
 struct page_t {
     int id;
     page_t() {}
@@ -7,3 +9,5 @@ struct page_t {
 };
 
 page_t slow_get_page(page_t &page);
+
+}

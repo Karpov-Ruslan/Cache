@@ -5,6 +5,8 @@
 #include <unordered_map>
 #include <vector>
 
+namespace krvlib {
+
 template <typename T = page_t>
 class page_temp {
   private:
@@ -50,3 +52,5 @@ class cache_t {
 };
 
 int result_of_lfu_cache(std::vector<page_t> &array_of_pages, size_t num_of_pages, int size);
+
+}

@@ -1,34 +1,34 @@
 #include "lfu_cache.hpp"
 
 template <typename T>
-page_temp<T>::page_temp(T page) {
+krvlib::page_temp<T>::page_temp(T page) {
     this->page = page;
     counter = 1;
 }
 
 template <typename T>
-int page_temp<T>::increase_counter() {
+int krvlib::page_temp<T>::increase_counter() {
     counter++;
     return counter;
 }
 
 template <typename T>
-T page_temp<T>::get_page() const {
+T krvlib::page_temp<T>::get_page() const {
     return page;
 }
 
 template <typename T>
-int page_temp<T>::get_counter() const {
+int krvlib::page_temp<T>::get_counter() const {
     return counter;
 }
 
 template <typename T, typename KeyF>
-cache_t<T, KeyF>::cache_t(size_t size) {
+krvlib::cache_t<T, KeyF>::cache_t(size_t size) {
         sz = size;
 }
 
 template <typename T, typename KeyF>
-typename cache_t<T, KeyF>::ListIt cache_t<T, KeyF>::pos_for_new_element() {
+typename krvlib::cache_t<T, KeyF>::ListIt krvlib::cache_t<T, KeyF>::pos_for_new_element() {
     ListIt it = cache.begin();
     ListIt back = cache.end();
     back--;
@@ -44,7 +44,7 @@ typename cache_t<T, KeyF>::ListIt cache_t<T, KeyF>::pos_for_new_element() {
 }
 
 template <typename T, typename KeyF>
-typename cache_t<T, KeyF>::ListIt cache_t<T, KeyF>::insert_new_element(page_temp<T> &page_) {
+typename krvlib::cache_t<T, KeyF>::ListIt krvlib::cache_t<T, KeyF>::insert_new_element(page_temp<T> &page_) {
     if (cache.size() == 0) {
         cache.push_front(page_);
         return cache.begin();
@@ -56,7 +56,7 @@ typename cache_t<T, KeyF>::ListIt cache_t<T, KeyF>::insert_new_element(page_temp
 }
 
 template <typename T, typename KeyF>
-typename cache_t<T, KeyF>::ListIt cache_t<T, KeyF>::search_pos_for_update_element(ListIt &iter) {
+typename krvlib::cache_t<T, KeyF>::ListIt krvlib::cache_t<T, KeyF>::search_pos_for_update_element(ListIt &iter) {
     int ctr = iter->get_counter() + 1;
     ListIt it = iter;
     while(true) {
@@ -73,7 +73,7 @@ typename cache_t<T, KeyF>::ListIt cache_t<T, KeyF>::search_pos_for_update_elemen
 }
 
 template <typename T, typename KeyF>
-bool cache_t<T, KeyF>::update_element(ListIt &iter) {
+bool krvlib::cache_t<T, KeyF>::update_element(ListIt &iter) {
     ListIt it = search_pos_for_update_element(iter);
     iter->increase_counter();
     if(iter == it) {
@@ -86,7 +86,7 @@ bool cache_t<T, KeyF>::update_element(ListIt &iter) {
 }
 
 template <typename T, typename KeyF>
-bool cache_t<T, KeyF>::full() const {
+bool krvlib::cache_t<T, KeyF>::full() const {
     if(cache.size() == sz) {
         return true;
     }
@@ -94,7 +94,7 @@ bool cache_t<T, KeyF>::full() const {
 }
 
 template <typename T, typename KeyF>
-bool cache_t<T, KeyF>::lookup_update(KeyF key, T (*slow_get_page)(KeyF)) {
+bool krvlib::cache_t<T, KeyF>::lookup_update(KeyF key, T (*slow_get_page)(KeyF)) {
     auto hit = hash.find(key);
 
     if (hit == hash.end()) {
@@ -113,7 +113,7 @@ bool cache_t<T, KeyF>::lookup_update(KeyF key, T (*slow_get_page)(KeyF)) {
 }
 
 template <typename T, typename KeyF>
-bool cache_t<T, KeyF>::lookup_update(page_t &element) {
+bool krvlib::cache_t<T, KeyF>::lookup_update(page_t &element) {
     KeyF key = element.id;
     auto hit = hash.find(key);
 
@@ -132,7 +132,7 @@ bool cache_t<T, KeyF>::lookup_update(page_t &element) {
     return true;
 }
 
-int result_of_lfu_cache(std::vector<page_t> &array_of_pages, size_t num_of_pages, int size) {
+int krvlib::result_of_lfu_cache(std::vector<page_t> &array_of_pages, size_t num_of_pages, int size) {
     cache_t<page_t> cache(size);
     int counter = 0;
     for(int i = 0; i < num_of_pages; i++) {
