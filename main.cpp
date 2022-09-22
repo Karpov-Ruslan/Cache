@@ -6,7 +6,7 @@ int main() {
     
     size_t num_of_pages;
     int size, counter = 0;
-    std::cin >> num_of_pages >> size;
+    std::cin >> size >> num_of_pages;
     std::vector<krvlib::page_t> array;
     for (int i = 0; i < num_of_pages; i++) {
         int id;
@@ -15,7 +15,7 @@ int main() {
     }
 
     std::cout << "Numbers of LFU cache hits: " << krvlib::result_of_lfu_cache(array, num_of_pages, size) << std::endl;
-    std:: cout << "Numbers of ideal cache hits: " << krvlib::result_of_ideal_cache(array, num_of_pages, size) << std::endl;
+    std::cout << "Numbers of ideal cache hits: " << krvlib::result_of_ideal_cache(array, num_of_pages, size) << std::endl;
 
     return 0;
 }
