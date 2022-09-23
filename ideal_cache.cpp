@@ -19,17 +19,19 @@ bool krvlib::ideal_cache<T, KeyF>::full() const {
 template <typename T, typename KeyF>
 typename krvlib::ideal_cache<T, KeyF>::ListIt krvlib::ideal_cache<T, KeyF>::search_pos_for_new_element(long id) {//Переделать
     long number_of_next_element;
-    if (multi_hash.bucket_size(multi_hash.bucket(array[id].id)) == 0) {
+    auto bucket_id = multi_hash.bucket(array[id].id);
+    if (multi_hash.bucket_size(bucket_id) == 0) {
         number_of_next_element = LONG_MAX;
     }
     else{
-        number_of_next_element = (multi_hash.begin(multi_hash.bucket(array[id].id)))->second;
+        number_of_next_element = (multi_hash.begin(bucket_id))->second;
     }
     for (ListIt it = cache.begin(); it != cache.end(); it++) {
-        if (multi_hash.bucket_size(multi_hash.bucket(it->id)) == 0) {
+        auto bucket_index = multi_hash.bucket(it->id);
+        if (multi_hash.bucket_size(bucket_index) == 0) {
             return it;
         }
-        if (number_of_next_element <= (multi_hash.find(it->id)->second)) {
+        if (number_of_next_element <= (multi_hash.begin(bucket_index)->second)) {
             return it;
         }
     }
