@@ -4,6 +4,7 @@
 #include <list>
 #include <unordered_map>
 #include <vector>
+#include <cassert>
 
 namespace krvlib {
 
@@ -43,6 +44,7 @@ class cache_t {
 
   public:
     cache_t(size_t size) {
+        assert(size != 0);
         sz = size;
     }
 

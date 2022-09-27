@@ -6,6 +6,7 @@
 #include <vector>
 #include <map>
 #include <climits>
+#include <cassert>
 
 namespace krvlib {
 
@@ -23,6 +24,7 @@ class ideal_cache {
 
   public:
     ideal_cache(const size_t size, const std::vector<T> &buffer): array(buffer) {
+        assert(size != 0);
         for(long i = buffer.size() - 1; i >= 0; i--) {
             multi_hash.insert(std::make_pair(buffer[i].id, i));
         }
@@ -30,11 +32,12 @@ class ideal_cache {
     }
 
   private:
+    bool empty() const {
+        return (sz == 0) ? true : false;
+    }
+
     bool full() const {
-        if(cache.size() == sz) {
-            return true;
-        }
-        return false;
+        return (cache.size() == sz) ? true : false;
     }
 
     size_t next_same_id(size_t id) {
