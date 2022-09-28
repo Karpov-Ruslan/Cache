@@ -9,6 +9,7 @@ The second number - the number of elements
 Next numbers, the number of which is equal to the second number - elements
 
 Test:
+In tests.txt:
 The first number is the number of tests
 Further as in Cache, but two numbers are added in front, whis are expected numbers in LFU cache and ideal cache
 
