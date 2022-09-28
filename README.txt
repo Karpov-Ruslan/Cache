@@ -13,4 +13,4 @@ In tests.txt:
 The first number is the number of tests
 Further as in Cache, but two numbers are added in front, whis are expected numbers in LFU cache and ideal cache
 
-It is expected that the files will not be moved to the project repository.
+It is expected that the files will not be moved.
