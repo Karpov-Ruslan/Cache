@@ -5,7 +5,7 @@
 int main() {
     
     size_t num_of_pages;
-    int size, counter = 0;
+    int size;
     std::cin >> size >> num_of_pages;
     std::vector<krvlib::page_t> array;
     for (int i = 0; i < num_of_pages; i++) {

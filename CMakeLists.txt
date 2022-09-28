@@ -5,3 +5,4 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_FLAGS "-O2")
 
 add_executable(Cache main.cpp)
+add_executable(Test test.cpp)
