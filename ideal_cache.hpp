@@ -60,9 +60,12 @@ class ideal_cache {
     bool lookup_update(const size_t ArrN) {
         bool ret;
         const page_t &page = array[ArrN];
-        auto hit = hash.find(page.id);
         multi_hash.erase(multi_hash.find(page.id));
+        auto hit = hash.find(page.id);
         if (hit == hash.end()) {
+            if (next_same_id(ArrN) == LONG_MAX) {
+                return false;
+            }
             if (full()) {
                 hash.erase(cache.back().id);
                 search_tree.erase(next_same_id(cache.back().num));
