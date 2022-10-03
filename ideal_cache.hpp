@@ -23,21 +23,20 @@ class ideal_cache {
     using MapIt = typename std::map<size_t, ListIt>::iterator;
 
   public:
-    ideal_cache(const size_t size, const std::vector<T> &buffer): array(buffer) {
+    ideal_cache(const size_t size, const std::vector<T> &buffer): array(buffer), sz(size) {
         assert(size != 0);
         for(long i = buffer.size() - 1; i >= 0; i--) {
             multi_hash.insert(std::make_pair(buffer[i].id, i));
         }
-        sz = size;
     }
 
   private:
     bool empty() const {
-        return (sz == 0) ? true : false;
+        return (sz == 0);
     }
 
     bool full() const {
-        return (cache.size() == sz) ? true : false;
+        return (cache.size() == sz);
     }
 
     size_t next_same_id(size_t id) {

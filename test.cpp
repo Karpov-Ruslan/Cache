@@ -6,6 +6,7 @@
 int main() {
     
     int number_of_tests;
+
     std::ifstream fin("../tests.txt");
     fin >> number_of_tests;
     size_t num_of_pages;
