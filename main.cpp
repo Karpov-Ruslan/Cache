@@ -1,7 +1,6 @@
 #include <iostream>
 #include "lfu_cache.hpp"
 #include "ideal_cache.hpp"
-#include "old_lfu_cache.hpp"
 
 int main() {
     
